@@ -46,7 +46,7 @@
             <div class="ms-auto d-flex align-items-center gap-3">
                 <span class="text-muted d-none d-md-inline">Selamat datang, <strong>{{ Auth::user()->name }}</strong></span>
                 
-                <a href="{{ route('profil') }}">profile</a>
+                <a href="{{ route('profil') }}" class="text-decoration-none text-secondary">Profile</a>
 
                 <form action="{{ route('logout') }}" method="POST" class="m-0">
                     @csrf
@@ -85,8 +85,11 @@
                                 Isi Formulir Sekarang <i class="fa-solid fa-arrow-right ms-2"></i>
                             </a>
                         @else
+                            <a href="{{ route('pembayaran') }}" class="btn btn-warning btn-lg text-dark fw-bold px-4 py-3 shadow-sm me-2">
+                                <i class="fa-solid fa-wallet me-2"></i> Lihat Invoice Pembayaran
+                            </a>
                             <button class="btn btn-success btn-lg fw-bold px-4 py-3 shadow-sm" disabled>
-                                <i class="fa-solid fa-circle-check me-2"></i> Sudah Terdaftar
+                                <i class="fa-solid fa-circle-check me-2"></i> Data Diri Terdaftar
                             </button>
                         @endif
                     </div>
@@ -150,18 +153,22 @@
                     <div class="col-md-4">
                         <div class="p-3 border rounded-3 step-box h-100 bg-light">
                             <div class="d-flex align-items-start gap-3">
-                                <span class="badge bg-secondary bg-opacity-10 text-secondary fs-5 fw-bold px-3 py-2 rounded-3">3</span>
+                                @if(!Auth::user()->mahasiswa)
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary fs-5 fw-bold px-3 py-2 rounded-3">3</span>
+                                @else
+                                    <span class="badge bg-warning text-dark fs-5 fw-bold px-3 py-2 rounded-3">3</span>
+                                @endif
                                 <div>
-                                    <h5 class="fw-bold mb-1 text-dark">Verifikasi Berkas</h5>
-                                    <p class="text-muted small mb-2">Sistem dan tim admin akan memverifikasi berkas pendaftaran Anda untuk proses administrasi.</p>
+                                    <h5 class="fw-bold mb-1 text-dark">Pembayaran & Verifikasi</h5>
+                                    <p class="text-muted small mb-2">Selesaikan biaya administrasi program studi dan upload bukti transfer untuk validasi admin.</p>
                                     @if(!Auth::user()->mahasiswa)
                                         <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle rounded-pill">
                                             Belum Tersedia
                                         </span>
                                     @else
-                                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill">
-                                            Menunggu Verifikasi
-                                        </span>
+                                        <a href="{{ route('pembayaran') }}" class="badge bg-primary text-white text-decoration-none rounded-pill px-2 py-1.5 transition-all">
+                                            <i class="fa-solid fa-receipt me-1"></i> Bayar Sekarang <i class="fa-solid fa-chevron-right small ms-1"></i>
+                                        </a>
                                     @endif
                                 </div>
                             </div>

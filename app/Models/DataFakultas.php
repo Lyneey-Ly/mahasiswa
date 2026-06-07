@@ -10,7 +10,7 @@ class DataFakultas extends Model
     use HasFactory;
 
     public function pembayaran()
-    {
-        return $this->belongsTo(pembayaran::class);
-    }
+{
+    return $this->hasMany(pembayaran::class, 'fakultas_id');
+}
 }

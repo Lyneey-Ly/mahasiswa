@@ -25,8 +25,13 @@ class dataMahasiswa extends Model
         'lulusan_tahun',
     ];
 
-  public function user()
+  public function pembayaran()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->hasOne(Pembayaran::class, 'user_id', 'id'); 
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

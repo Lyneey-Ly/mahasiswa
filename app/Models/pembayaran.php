@@ -8,20 +8,33 @@ use Illuminate\Database\Eloquent\Model;
 class pembayaran extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'program_studi_id',
+        'fakultas_id', 
+        'harga_bayar',  
+        'status_pembayaran',
+        'bukti_transfer' 
+    ];
     public function user()
+{
+    return $this->belongsTo(\App\Models\User::class, 'user_id');
+}
+
+   public function DataFakultas()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(DataFakultas::class, 'fakultas_id');
     }
 
+    // Pastikan juga prodi menggunakan belongsTo mas
     public function DataProgramStudi()
     {
-        return $this->hasMany(DataProgramStudi::class);
+        return $this->belongsTo(DataProgramStudi::class, 'program_studi_id');
     }
-
-    public function DataFakultas()
-    {
-        return $this->hasMany(DataFakultas::class);
-    }
+    public function dataMahasiswa() {
+    return $this->belongsTo(dataMahasiswa::class, 'user_id', 'id');
+}
 
     public function laporan()
     {

@@ -16,52 +16,71 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void
+  public function run(): void
     {
-        
-    $user = user::create([
-            'name'=>'faizzs',
-            'email'=>'faiz@gmail.com',
-            'password'=>'faiz123',
-            'role'=>'admin'
-           
+        User::create([
+            'name' => 'Lyneey',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('admin123'), 
+            'role' => 'admin'
+        ]);
 
-            
-
+        $mahasiswa = User::create([
+            'name' => 'Calon Mahasiswa',
+            'email' => 'faiz@gmail.com',
+            'password' => bcrypt('faiz123'),
+            'role' => 'mahasiswa' 
         ]);
 
         dataMahasiswa::create([
-            'user_id'=>$user->id,
-            'nik'=>'1234356754',
-            'alamat'=>'nangeleng',
-            'jenis_Kelamin'=>'L',
-            'agama'=>'konghucu',
-            'tempat_lahir'=>'kotasukabumi',
-            'tanggal_lahir'=>'1945-10-14',
-            'no_hp'=>'000000000',
-            'lulusan_tahun'=>'2020',
+            'user_id' => $mahasiswa->id, 
+            'nik' => '1234356754',
+            'alamat' => 'nangeleng',
+            'jenis_kelamin' => 'L', 
+            'agama' => 'konghucu',
+            'tempat_lahir' => 'kotasukabumi',
+            'tanggal_lahir' => '1945-10-14',
+            'no_hp' => '000000000',
+            'lulusan_tahun' => '2020',
         ]);
 
-        DataFakultas::create([
-            'namaFakultas'=>'Mesin',
+        
+        $fakultas = DataFakultas::create([
+            'namaFakultas' => 'Mesin', 
         ]);
 
-        DataProgramStudi::create([
-            'namaProgramStudi'=>'teknik Mesin',
+        $prodi = DataProgramStudi::create([
+            'fakultas_id' => $fakultas->id,
+            'namaProgramStudi' => 'Teknik Mesin',
+            'biaya_pendaftaran' => 1000000, 
         ]);
 
-        pembayaran::create([
-            'user_id'=>'1',
-            'data_program_studi_id'=>'1',
-            'data_fakultas_id'=>'1',
-            'hargabayar'=>1000000,
-            'status_pembayaran'=>'blmdbyr',
-
+          $fakultas = DataFakultas::create([
+            'namaFakultas' => 'Kedokteran', 
         ]);
 
+        $prodi = DataProgramStudi::create([
+            'fakultas_id' => $fakultas->id,
+            'namaProgramStudi' => 'dokter bedah',
+            'biaya_pendaftaran' => 1000000, 
+        ]);
 
+          $fakultas = DataFakultas::create([
+            'namaFakultas' => 'Kedokteran', 
+        ]);
 
+        $prodi = DataProgramStudi::create([
+            'fakultas_id' => $fakultas->id,
+            'namaProgramStudi' => 'dokter gigi',
+            'biaya_pendaftaran' => 1000000, 
+        ]);
 
-
+       pembayaran::create([
+    'user_id'          => $mahasiswa->id,
+    'program_studi_id' => $prodi->id,    
+    'fakultas_id'      => $fakultas->id, 
+    'harga_bayar'      => 1000000,       
+    'status_pembayaran'=> 'blmdbyr',
+]);
     }
 }

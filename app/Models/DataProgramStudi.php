@@ -12,4 +12,11 @@ class DataProgramStudi extends Model
     {
         return $this->belongsTo(pembayaran::class);
     }
+
+    protected $fillable = ['fakultas_id', 'nama_prodi', 'biaya_pendaftaran'];
+
+   public function DataFakultas()
+{
+    return $this->belongsTo(DataFakultas::class, 'fakultas_id', 'id');
+}
 }
